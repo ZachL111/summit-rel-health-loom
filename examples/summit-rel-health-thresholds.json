@@ -1,0 +1,17 @@
+{
+  "repo": "summit-rel-health-loom",
+  "thresholds": {
+    "signal": 2,
+    "slack": 1,
+    "confidence": 2,
+    "drag": 3,
+    "ship": 168,
+    "watch": 124
+  },
+  "terms": [
+    "budget pressure",
+    "failure width",
+    "recovery gap",
+    "runbook drift"
+  ]
+}
