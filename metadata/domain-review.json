@@ -1,0 +1,73 @@
+{
+  "repo": "summit-rel-health-loom",
+  "language": "Solidity",
+  "category": "Reliability",
+  "goal": "Develop a Solidity command-oriented project for health scenarios with capacity fixtures, allocation and spill reports, and no credentials or hosted services.",
+  "review_model": {
+    "terms": [
+      "budget pressure",
+      "failure width",
+      "recovery gap",
+      "runbook drift"
+    ],
+    "lanes": [
+      "ship",
+      "watch",
+      "hold"
+    ],
+    "score": "signal * 2 + slack + confidence - drag * 3",
+    "purpose": "surface the domain-specific cases that need the most careful review"
+  },
+  "cases": [
+    {
+      "name": "baseline",
+      "focus": "budget pressure",
+      "signal": 42,
+      "slack": 50,
+      "drag": 29,
+      "confidence": 51,
+      "score": 98,
+      "lane": "hold"
+    },
+    {
+      "name": "stress",
+      "focus": "failure width",
+      "signal": 74,
+      "slack": 28,
+      "drag": 21,
+      "confidence": 46,
+      "score": 159,
+      "lane": "ship"
+    },
+    {
+      "name": "edge",
+      "focus": "recovery gap",
+      "signal": 49,
+      "slack": 40,
+      "drag": 8,
+      "confidence": 45,
+      "score": 159,
+      "lane": "ship"
+    },
+    {
+      "name": "recovery",
+      "focus": "runbook drift",
+      "signal": 49,
+      "slack": 54,
+      "drag": 22,
+      "confidence": 57,
+      "score": 143,
+      "lane": "ship"
+    },
+    {
+      "name": "stale",
+      "focus": "budget pressure",
+      "signal": 67,
+      "slack": 35,
+      "drag": 25,
+      "confidence": 73,
+      "score": 167,
+      "lane": "ship"
+    }
+  ]
+}

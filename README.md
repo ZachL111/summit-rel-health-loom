@@ -1,69 +1,40 @@
 # summit-rel-health-loom
 
-`summit-rel-health-loom` is a focused Solidity codebase around develop a Solidity command-oriented project for health scenarios with capacity fixtures, allocation and spill reports, and no credentials or hosted services. It is meant to be easy to inspect, run, and extend without a hosted service.
+`summit-rel-health-loom` explores reliability with a small Solidity codebase and local fixtures. The technical goal is to develop a Solidity command-oriented project for health scenarios with capacity fixtures, allocation and spill reports, and no credentials or hosted services.
 
-## Summit Rel Health Loom Walkthrough
+## Why This Exists
 
-I would read the project from the outside in: command, fixture, model, then roadmap. That keeps the reliability idea grounded in files that can be checked locally.
+This is intentionally local and self-contained so it can be inspected without credentials, services, or seeded history.
 
-## Reason For The Project
+## Summit Rel Health Loom Review Notes
 
-The repository exists to keep a technical idea small enough to reason about. The implementation avoids external dependencies where possible, then uses fixtures to make changes easy to review.
-
-## Data Notes
-
-`degraded` is the first example I would inspect because it lands on the `review` path with a score of -39. The broader file also keeps `degraded` at -39 and `recovery` at 194, which gives the model a useful low-to-high spread.
-
-## How It Is Put Together
-
-The design is intentionally direct: parse or construct a signal, score it, classify it, and verify the expected branch. This makes the repository useful for studying reliability behavior without needing a service or database unless the language project itself is SQL. The Solidity project uses Foundry tests and pure contract functions so invariants are cheap to exercise.
+For a quick review, compare `budget pressure` with `budget pressure` before reading the middle cases.
 
 ## Capabilities
 
-- Models failure windows with deterministic scoring and explicit review decisions.
-- Uses fixture data to keep retry budgets changes visible in code review.
-- Includes extended examples for runbook checks, including `recovery` and `degraded`.
-- Documents recovery paths tradeoffs in `docs/operations.md`.
-- Runs locally with a single verification command and no external credentials.
+- `fixtures/domain_review.csv` adds cases for budget pressure and failure width.
+- `metadata/domain-review.json` records the same cases in structured form.
+- `config/review-profile.json` captures the read order and the two review questions.
+- `examples/summit-rel-health-walkthrough.md` walks through the case spread.
+- The Solidity code includes a review path for `budget pressure` and `budget pressure`.
+- `docs/field-notes.md` explains the strongest and weakest cases.
 
-## Command Examples
+## Implementation Shape
+
+The core code exposes a scoring path and the added review layer uses `signal`, `slack`, `drag`, and `confidence`. The domain terms are `budget pressure`, `failure width`, `recovery gap`, and `runbook drift`.
+
+The Solidity checks add a pure review lens and Foundry coverage.
+
+## Local Usage
 
 ```powershell
 powershell -NoProfile -ExecutionPolicy Bypass -File scripts/verify.ps1
 ```
 
-This runs the language-level build or test path against the compact fixture set.
+## Verification
 
-## Check The Work
+The same command runs the local verification path. The highest-scoring domain case is `stale` at 167, which lands in `ship`. The most cautious case is `baseline` at 98, which lands in `hold`.
 
-```powershell
-powershell -NoProfile -ExecutionPolicy Bypass -File scripts/audit.ps1
-```
+## Roadmap
 
-The audit command checks repository structure and README constraints before it delegates to the verifier.
-
-## Where Things Live
-
-- `src`: primary implementation
-- `test`: language test directory
-- `fixtures`: compact golden scenarios
-- `examples`: expanded scenario set
-- `metadata`: project constants and verification metadata
-- `docs`: operations and extension notes
-- `scripts`: local verification and audit commands
-- `foundry.toml`: Foundry project configuration
-
-## Possible Extensions
-
-- Add a short report command that prints the score breakdown for a single scenario.
-- Add malformed input fixtures so the failure path is as visible as the happy path.
-- Split the scoring constants into a typed configuration object and validate it before use.
-- Add one more reliability fixture that focuses on a malformed or borderline input.
-
-## Tradeoffs
-
-The examples cover useful edges, not every edge. A larger version would add malformed-input tests, richer reports, and deeper domain parsers.
-
-## Getting It Running
-
-The only required setup is the local Solidity toolchain. After cloning, stay in the repo root so fixture paths resolve correctly.
+No external service is required. A deeper version would add more negative cases and a clearer boundary around invalid input.
